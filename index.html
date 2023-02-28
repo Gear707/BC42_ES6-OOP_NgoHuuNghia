@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR MANAGEMENT</title>
+
+    <!-- BS4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Page Content Holder -->
+    <div class="content">
+        <div class="container">
+            <div class="card">
+                <!-- Header -->
+                <div class="card-header text-center d-flex justify-content-between">
+                    <h3 class="text-info text-left font-weight-bold">Danh sách quản lý</h3>
+                    <button class="btn btn-warning" id="btnOpenModal" data-toggle="modal" data-target="#personModal">
+                        Thêm mới
+                    </button>
+                </div>
+                <!-- Body -->
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <input id="txtSearch" type="text" class="form-control" placeholder="Tìm từ khóa" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <button class="btn btn-primary" id="btnAll">Tất cả</button>
+                            <button class="btn btn-success ml-3" id="btnStudent">Học sinh</button>
+                            <button class="btn btn-danger ml-3" id="btnEmployee">Nhân viên</button>
+                            <button class="btn btn-info ml-3" id="btnCustomer">Khách hàng</button>
+                        </div>
+                        <!-- <div class="col-4">
+                            <div class="form-group row">
+                                <div class="w-50">
+                                    <select class="custom-select" id="category">
+                                        <option value="person" selected>Tất cả</option>
+                                        <option value="student">Học sinh</option>
+                                        <option value="employee">Nhân viên</option>
+                                        <option value="customer">Khách hàng</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="bg-light text-dark">
+                                <tr>
+                                    <th>Mã</th>
+                                    <th>Họ tên</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Email</th>
+                                    <th class="student-table d-none" id="math">Toán</th>
+                                    <th class="student-table d-none" id="physics">Lý</th>
+                                    <th class="student-table d-none" id="chemistry">Hóa</th>
+                                    <th class="student-table d-none" id="averageGrade">Điểm TB</th>
+                                    <th class="employee-table d-none" id="workingDays">Số ngày làm</th>
+                                    <th class="employee-table d-none" id="totalWage">Tổng lương</th>
+                                    <th class="customer-table d-none" id="companyName">Tên công ty</th>
+                                    <th class="customer-table d-none" id="bill">Trị giá hóa đơn</th>
+                                    <th class="customer-table d-none" id="comment">Đánh giá</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableList"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer myCardFooter">
+                    <nav>
+                        <ul class="pagination justify-content-center" id="ulPhanTrang">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="personModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <header class="head-form mb-0">
+                    <h3 id="header-title">Quản lý nhân sự</h3>
+                </header>
+
+                <!-- Modal Header -->
+                <!-- 	<div class="modal-header">
+					<h4 class="modal-title" id="modal-title">Modal Heading</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div> -->
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <form role="form" id="personForm">
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input type="text" name="tk" id="tknv" class="form-control input-sm"
+                                    placeholder="Tài khoản">
+                            </div>
+                            <span class="spNoti" id="tbTKNV"></span>
+                        </div>
+
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                </div>
+                                <input type="name" name="name" id="name" class="form-control input-sm"
+                                    placeholder="Họ và tên">
+                            </div>
+                            <span class="spNoti" id="tbTen"></span>
+                        </div>
+
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                </div>
+                                <input type="email" name="email" id="email" class="form-control input-sm"
+                                    placeholder="Email">
+                            </div>
+                            <span class="spNoti" id="tbEmail"></span>
+                        </div>
+
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-key"></i></span>
+                                </div>
+                                <input type="password" name="password" id="password" class="form-control input-sm"
+                                    placeholder="Mật khẩu">
+                            </div>
+                            <span class="spNoti" id="tbMatKhau"></span>
+                        </div>
+
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                <input type="text" name="ngaylam" id="datepicker" class="form-control"
+                                    placeholder="Ngày làm">
+                            </div>
+                            <span class="spNoti" id="tbNgay"></span>
+                        </div>
+
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
+                                </div>
+                                <input type="text" name="luongCB" id="luongCB" class="form-control input-sm"
+                                    placeholder="Lương cơ bản">
+                            </div>
+                            <span class="spNoti" id="tbLuongCB"></span>
+                        </div>
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+                                </div>
+                                <select class="form-control" id="chucvu">
+                                    <option>Chọn chức vụ</option>
+                                    <option>Sếp</option>
+                                    <option>Trưởng phòng</option>
+                                    <option>Nhân viên</option>
+                                </select>
+                            </div>
+                            <span class="spNoti" id="tbChucVu"></span>
+                        </div>
+                        <div class="form-group form__item">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-clock-o"
+                                            aria-hidden="true"></i></span>
+                                </div>
+                                <input type="text" name="gioLam" id="gioLam" class="form-control input-sm"
+                                    placeholder="Giờ làm">
+                            </div>
+                            <span class="spNoti" id="tbGiolam"></span>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer" id="modal-footer">
+                    <button id="btnThemNV" type="button" class="btn btn-success">Thêm người dùng</button>
+                    <button id="btnCapNhat" type="button" class="btn btn-success">Cập nhật</button>
+                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- BS4 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
