@@ -19,12 +19,8 @@ th {
     text-align: center;
 }
 
-input {
+input, select {
     &:focus {
         box-shadow: none !important;
     }
-}
-
-.table-responsive {
-    overflow: unset;
 }

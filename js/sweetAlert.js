@@ -1,3 +1,5 @@
+import Swal from "../node_modules/sweetalert2/src/sweetalert2.js";
+
 // Sử dụng thư viện SweetAlert2 để tạo các thông báo alert
 const Toast = Swal.mixin({
     toast: true,
@@ -6,9 +8,8 @@ const Toast = Swal.mixin({
     timer: 2000
 })
 
-
 // Thông báo thực hiện thao tác thành công
-function alertSuccess(alert) {
+export function alertSuccess(alert) {
     return Toast.fire({
         icon: 'success',
         title: alert
@@ -17,7 +18,7 @@ function alertSuccess(alert) {
 
 
 // Thông báo thực hiện thao tác thất bại
-function alertFail(alert) {
+export function alertFail(alert) {
     return Toast.fire({
         icon: 'error',
         title: alert
@@ -26,7 +27,7 @@ function alertFail(alert) {
 
 
 // Thông báo xác nhận xóa data
-function warningDelete() {
+export function warningDelete() {
     return Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
