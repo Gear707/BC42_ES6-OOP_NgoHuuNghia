@@ -2,6 +2,8 @@ import { Person, Student, Employee, Customer } from "./Person.js";
 import { getPersonAPI, deletePersonAPI } from "./personAPI.js";
 import { alertFail, alertSuccess, warningDelete } from "./sweetAlert.js";
 
+
+
 // Hiển thị danh sách tất cả user
 getPerson();
 
@@ -13,7 +15,8 @@ async function getPerson(searchVal) {
         console.log(response);
         const person = response.data.map(person => {
             return new Person(
-                person.recNum,
+                person.id,
+                person.category,
                 person.fullName,
                 person.address,
                 person.email
@@ -35,7 +38,8 @@ async function getStudent() {
         console.log(response);
         const student = response.data.map(student => {
             return new Student(
-                student.recNum,
+                student.id,
+                student.category,
                 student.fullName,
                 student.address,
                 student.email,
@@ -60,7 +64,8 @@ async function getEmployee() {
         console.log(response);
         const employee = response.data.map(employee => {
             return new Employee(
-                employee.recNum,
+                employee.id,
+                employee.category,
                 employee.fullName,
                 employee.address,
                 employee.email,
@@ -84,7 +89,8 @@ async function getCustomer() {
         console.log(response);
         const customer = response.data.map(customer => {
             return new Customer(
-                customer.recNum,
+                customer.id,
+                customer.category,
                 customer.fullName,
                 customer.address,
                 customer.email,
@@ -102,23 +108,81 @@ async function getCustomer() {
 }
 
 
-// Xóa data khỏi server
-async function deletePerson(recNum){
+// Xóa data của 1 user bất kì khỏi server
+window.deletePerson = async function deletePerson(personID) {
     try {
-        const {isConfirmed: result} = await warningDelete();
+        const { isConfirmed: result } = await warningDelete();
         console.log(result);
         if (result) {
-            await deletePersonAPI(recNum);
+            await deletePersonAPI(personID);
 
             await getPerson();
-
-            alertSuccess("Xóa dữ liệu thành công");
+            
+            alertSuccess("Xóa dữ liệu người dùng thành công");
         }
     } catch (error) {
         console.log(error);
-        alertFail("Xóa dữ liệu thất bại");
+        alertFail("Xóa dữ liệu người dùng thất bại");
     }
 }
+
+
+// Xóa data của user học viên
+window.deleteStudent = async function deleteStudent(studentID) {
+    try {
+        const { isConfirmed: result } = await warningDelete();
+        console.log(result);
+        if (result) {
+            await deletePersonAPI(studentID, "Học viên");
+
+            await getStudent();
+            
+            alertSuccess("Xóa dữ liệu học viên thành công");
+        }
+    } catch (error) {
+        console.log(error);
+        alertFail("Xóa dữ liệu học viên thất bại");
+    }
+}
+
+
+// Xóa data của user giảng viên
+window.deleteEmployee = async function deleteEmployee(employeeID) {
+    try {
+        const { isConfirmed: result } = await warningDelete();
+        console.log(result);
+        if (result) {
+            await deletePersonAPI(employeeID, "Giảng viên");
+
+            await getEmployee();
+            
+            alertSuccess("Xóa dữ liệu giảng viên thành công");
+        }
+    } catch (error) {
+        console.log(error);
+        alertFail("Xóa dữ liệu giảng viên thất bại");
+    }
+}
+
+
+// Xóa data của user khách hàng
+window.deleteCustomer = async function deleteCustomer(customerID) {
+    try {
+        const { isConfirmed: result } = await warningDelete();
+        console.log(result);
+        if (result) {
+            await deletePersonAPI(customerID, "Khách hàng");
+
+            await getCustomer();
+            
+            alertSuccess("Xóa dữ liệu khách hàng thành công");
+        }
+    } catch (error) {
+        console.log(error);
+        alertFail("Xóa dữ liệu khách hàng thất bại");
+    }
+}
+
 
 
 // Hiển thị danh sách chung
@@ -127,19 +191,20 @@ function renderPerson(person) {
         return (result +
             `
             <tr>
-                <td class="text-center">${person.recNum}</td>
+                <td class="text-center">${person.id}</td>
+                <td class="text-center">${person.category}</td>
                 <td class="text-center">${person.fullName}</td>
                 <td class="text-center">${person.address}</td>
                 <td class="text-center">${person.email}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="selectPerson(${person.recNum})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="deletePerson(${person.recNum})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${person.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deletePerson(${person.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
             `
         );
     }, "");
-    
+
     getEle("#userList").innerHTML = html;
 }
 
@@ -149,7 +214,8 @@ function renderStudent(student) {
         return (result +
             `
             <tr>
-                <td class="text-center">${student.recNum}</td>
+                <td class="text-center">${student.id}</td>
+                <td class="text-center">${student.category}</td>
                 <td class="text-center">${student.fullName}</td>
                 <td class="text-center">${student.address}</td>
                 <td class="text-center">${student.email}</td>
@@ -158,8 +224,8 @@ function renderStudent(student) {
                 <td class="text-center">${student.chemistry}</td>
                 <td class="text-center">${student.averageGrade()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="selectPerson(${student.recNum})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="deletePerson(${student.recNum})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${student.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deleteStudent(${student.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
             `
@@ -175,14 +241,15 @@ function renderEmployee(employee) {
         return (result +
             `
             <tr>
-                <td class="text-center">${employee.recNum}</td>
+                <td class="text-center">${employee.id}</td>
+                <td class="text-center">${employee.category}</td>
                 <td class="text-center">${employee.fullName}</td>
                 <td class="text-center">${employee.address}</td>
                 <td class="text-center">${employee.email}</td>
                 <td class="text-center">${employee.totalSalary()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="selectPerson(${employee.recNum})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="deletePerson(${employee.recNum})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${employee.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deleteEmployee(${employee.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
             `
@@ -198,7 +265,8 @@ function renderCustomer(customer) {
         return (result +
             `
             <tr>
-                <td class="text-center">${customer.recNum}</td>
+                <td class="text-center">${customer.id}</td>
+                <td class="text-center">${customer.category}</td>
                 <td class="text-center">${customer.fullName}</td>
                 <td class="text-center">${customer.address}</td>
                 <td class="text-center">${customer.email}</td>
@@ -206,8 +274,8 @@ function renderCustomer(customer) {
                 <td class="text-center">${customer.invoice}</td>
                 <td class="text-center">${customer.comment}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="selectPerson(${customer.recNum})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="deletePerson(${customer.recNum})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${customer.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deleteCustomer(${customer.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
             `
@@ -219,7 +287,8 @@ function renderCustomer(customer) {
 
 
 /* DOM */
-getEle("#categoryList").addEventListener("change", () => {
+getEle("#categoryList").addEventListener("change", (event) => {
+    console.log(event);
     let categoryList = getEle("#categoryList").value;
     switch (categoryList) {
         case "student":
@@ -322,3 +391,14 @@ function displayCustomer() {
     getEle("#thComment").classList.remove("d-none");
 }
 
+
+// Lắng nghe sự kiện từ các button xóa bên trong tbody
+// document.getElementById("userList").addEventListener("click", (event) => {
+//     console.log(event.target);
+//     // Kiểm tra xem element vừa phát sinh ra sự kiện có thuộc tính data-id hay không, nếu có thì lấy ra giá trị của thuộc tính đó
+//     const id = event.target.getAttribute("data-id");
+//     console.log(id);
+//     // Sau khi có id gọi tới hàm deleteProduct
+//     if (!id) return;
+//     deletePerson(id);
+// });

@@ -54,19 +54,20 @@
                                 <div class="w-50">
                                     <select class="custom-select" id="categoryList">
                                         <option selected>Tất cả</option>
-                                        <option value="student">Học viên</option>
-                                        <option value="employee">Giảng viên</option>
-                                        <option value="customer">Khách hàng</option>
+                                        <option value="student" id="stu">Học viên</option>
+                                        <option value="employee" id="emp">Giảng viên</option>
+                                        <option value="customer" id="cus">Khách hàng</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-sortable" id="academyTable">
                             <thead class="bg-light text-dark">
                                 <tr>
-                                    <th>Mã</th>
+                                    <th>#</th>
+                                    <th>Phân loại</th>
                                     <th>Họ tên</th>
                                     <th>Địa chỉ</th>
                                     <th>Email</th>
@@ -74,9 +75,9 @@
                                     <th class="student-table d-none" id="thPhysics">Lý</th>
                                     <th class="student-table d-none" id="thChemistry">Hóa</th>
                                     <th class="student-table d-none" id="thAverageGrade">Điểm TB</th>
-                                    <th class="employee-table d-none" id="thTotalSalary">Tổng lương (VND)</th>
+                                    <th class="employee-table d-none" id="thTotalSalary">Tổng lương</th>
                                     <th class="customer-table d-none" id="thCompany">Tên công ty</th>
-                                    <th class="customer-table d-none" id="thInvoice">Trị giá hóa đơn (VND)</th>
+                                    <th class="customer-table d-none" id="thInvoice">Hóa đơn</th>
                                     <th class="customer-table d-none" id="thComment">Đánh giá</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -109,7 +110,10 @@
                 <div class="modal-body">
                     <form role="form" id="personForm">
                         <div class="form-group form__item">
-                            <div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                </div>
                                 <select class="select-user custom-select" id="userType">
                                     <option selected>Chọn loại người dùng</option>
                                     <option value="student">Học viên</option>
@@ -120,15 +124,6 @@
                             <span class="spNoti" id="notiUserType"></span>
                         </div>
                         <section>
-                            <div class="form-group form__item">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
-                                    </div>
-                                    <input type="text" id="recNum" class="form-control" placeholder="Mã">
-                                </div>
-                                <span class="spNoti" id="notiRecNum"></span>
-                            </div>
                             <div class="form-group form__item">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -259,6 +254,7 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
         crossorigin="anonymous"></script>
 
+    <script src="./js/sortTable.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
 

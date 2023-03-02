@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 a {
   text-decoration: none;
   transition: all 0.3s;
@@ -50,6 +52,28 @@ select:focus {
   100% {
     transform: translateY(0);
   }
+}
+
+.table-sortable th {
+  cursor: pointer;
+}
+
+.table-sortable .th-sort-asc::after {
+  content: "▴";
+}
+
+.table-sortable .th-sort-desc::after {
+  content: "▾";
+}
+
+.table-sortable .th-sort-asc::after,
+.table-sortable .th-sort-desc::after {
+  margin-left: 5px;
+}
+
+.table-sortable .th-sort-asc,
+.table-sortable .th-sort-desc {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 #personModal header h3 {

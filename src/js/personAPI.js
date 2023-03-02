@@ -15,12 +15,12 @@ export function getPersonAPI(searchVal){
 }
 
 // Xóa data khỏi server
-export function deletePersonAPI(recNumber){
+export function deletePersonAPI(personID, usertype){
     return axios({
         method: "DELETE",
-        url: API_URL,
+        url: `${API_URL}/${personID}`,
         params: {
-            recNum: recNumber
+            category: usertype || undefined
         }
     });
 }

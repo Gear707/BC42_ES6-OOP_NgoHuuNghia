@@ -1,8 +1,9 @@
 /* Tạo lớp cha Person và 3 lớp con gồm: Student, Employ, Customer */
 
 export class Person {
-    constructor(recNum, fullName, address, email) {
-        this.recNum = recNum;
+    constructor(id, category, fullName, address, email) {
+        this.id = id
+        this.category = category;
         this.fullName = fullName;
         this.address = address;
         this.email = email;
@@ -10,8 +11,8 @@ export class Person {
 }
 
 export class Student extends Person {
-    constructor(recNum, fullName, address, email, math, physics, chemistry) {
-        super(recNum, fullName, address, email);
+    constructor(id, category, fullName, address, email, math, physics, chemistry) {
+        super(id, category, fullName, address, email);
         this.math = Number(math);
         this.physics = Number(physics);
         this.chemistry = Number(chemistry);
@@ -19,14 +20,13 @@ export class Student extends Person {
 
     averageGrade() {
         let grade = (this.math + this.physics + this.chemistry) / 3;
-        console.log(grade);
         return grade.toFixed(2);
     }
 }
 
 export class Employee extends Person {
-    constructor(recNum, fullName, address, email, days, baseSalary) {
-        super(recNum, fullName, address, email);
+    constructor(id, category, fullName, address, email, days, baseSalary) {
+        super(id, category, fullName, address, email);
         this.days = Number(days);
         this.baseSalary = Number(baseSalary);
     }
@@ -38,8 +38,8 @@ export class Employee extends Person {
 }
 
 export class Customer extends Person {
-    constructor(recNum, fullName, address, email, company, invoice, comment) {
-        super(recNum, fullName, address, email);
+    constructor(id, category, fullName, address, email, company, invoice, comment) {
+        super(id, category, fullName, address, email);
         this.company = company;
         this.invoice = Number(invoice).toLocaleString();
         this.comment = comment;
