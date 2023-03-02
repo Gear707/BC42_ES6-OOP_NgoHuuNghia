@@ -1,4 +1,5 @@
 import axios from "../../node_modules/axios/dist/esm/axios.js";
+// import axios from "axios";
 
 const API_URL = "https://63e86417cbdc565873852d8b.mockapi.io/api/users";
 

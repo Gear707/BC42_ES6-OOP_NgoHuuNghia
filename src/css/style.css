@@ -75,8 +75,7 @@ select:focus {
 }
 
 #personForm .form__item .select-user {
-  color: white;
-  background-color: #498a5c;
+  color: black;
 }
 
 #personForm .form__item .spNoti {
