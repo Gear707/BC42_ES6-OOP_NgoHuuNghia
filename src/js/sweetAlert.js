@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+import Swal from "../../node_modules/sweetalert2/src/sweetalert2.js";
 
 // Sử dụng thư viện SweetAlert2 để tạo các thông báo alert
 const Toast = Swal.mixin({

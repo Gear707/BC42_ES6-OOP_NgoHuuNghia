@@ -1,6 +1,6 @@
-import { Person, Student, Employee, Customer } from "./Person";
-import { getPersonAPI, deletePersonAPI } from "./personAPI";
-import { alertFail, alertSuccess, warningDelete } from "./sweetAlert";
+import { Person, Student, Employee, Customer } from "./Person.js";
+import { getPersonAPI, deletePersonAPI } from "./personAPI.js";
+import { alertFail, alertSuccess, warningDelete } from "./sweetAlert.js";
 
 // Hiển thị danh sách tất cả user
 getPerson();
