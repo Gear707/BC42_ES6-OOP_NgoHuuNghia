@@ -1,9 +1,12 @@
-import { Person, Student, Employee, Customer } from "./Person.js";
-import { getPersonAPI } from "./personAPI.js";
-import { alertFail, alertSuccess, warningDelete } from "./sweetAlert.js";
+import { Person, Student, Employee, Customer } from "./Person";
+import { getPersonAPI, deletePersonAPI } from "./personAPI";
+import { alertFail, alertSuccess, warningDelete } from "./sweetAlert";
 
+// Hiển thị danh sách tất cả user
 getPerson();
 
+
+// Lấy data của tất cả user từ server
 async function getPerson(searchVal) {
     try {
         const response = await getPersonAPI(searchVal);
@@ -24,6 +27,8 @@ async function getPerson(searchVal) {
     }
 }
 
+
+// Lấy data của user học viên
 async function getStudent() {
     try {
         const response = await getPersonAPI("Học viên");
@@ -47,6 +52,8 @@ async function getStudent() {
     }
 }
 
+
+// Lấy data của user giảng viên
 async function getEmployee() {
     try {
         const response = await getPersonAPI("Giảng viên");
@@ -69,6 +76,8 @@ async function getEmployee() {
     }
 }
 
+
+// Lấy data của user khách hàng
 async function getCustomer() {
     try {
         const response = await getPersonAPI("Khách hàng");
@@ -93,6 +102,25 @@ async function getCustomer() {
 }
 
 
+// Xóa data khỏi server
+async function deletePerson(recNum){
+    try {
+        const {isConfirmed: result} = await warningDelete();
+        console.log(result);
+        if (result) {
+            await deletePersonAPI(recNum);
+
+            await getPerson();
+
+            alertSuccess("Xóa dữ liệu thành công");
+        }
+    } catch (error) {
+        console.log(error);
+        alertFail("Xóa dữ liệu thất bại");
+    }
+}
+
+
 // Hiển thị danh sách chung
 function renderPerson(person) {
     let html = person.reduce((result, person) => {
@@ -111,7 +139,7 @@ function renderPerson(person) {
             `
         );
     }, "");
-
+    
     getEle("#userList").innerHTML = html;
 }
 
@@ -293,3 +321,4 @@ function displayCustomer() {
     getEle("#thInvoice").classList.remove("d-none");
     getEle("#thComment").classList.remove("d-none");
 }
+
