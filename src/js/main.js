@@ -1,11 +1,76 @@
 import { Person, Student, Employee, Customer } from "./Person.js";
-import { getPersonAPI, deletePersonAPI } from "./personAPI.js";
+import { getPersonAPI, deletePersonAPI, createPersonAPI } from "./personAPI.js";
 import { alertFail, alertSuccess, warningDelete } from "./sweetAlert.js";
 
 
 
 // Hiển thị danh sách tất cả user
 getPerson();
+
+
+// Thêm mới user vào server
+getEle("#btnAdd").addEventListener("click", () => {
+    const person = {
+        category: getEle("#userType").value,
+        fullName: getEle("#fullName").value,
+        email: getEle("#email").value,
+        address: getEle("#address").value
+    };
+
+    const student = {
+        ...person,
+        math: getEle("#math").value,
+        physics: getEle("#physics").value,
+        chemistry: getEle("#chemistry").value
+    }
+
+    const employee = {
+        ...person,
+        days: getEle("#days").value,
+        baseSalary: getEle("#baseSalary").value
+    }
+
+    const customer = {
+        ...person,
+        company: getEle("#company").value,
+        invoice: getEle("#invoice").value,
+        comment: getEle("#comment").value
+    }
+
+    let userType = getEle("#userType").value;
+    switch (userType) {
+        case "Học sinh":
+            try {
+                createPersonAPI(student);
+                alertSuccess("Thêm dữ liệu học sinh thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Thêm dữ liệu học sinh thất bại");
+            }
+            break;
+        case "Nhân viên":
+            try {
+                createPersonAPI(employee);
+                alertSuccess("Thêm dữ liệu nhân viên thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Thêm dữ liệu nhân viên thất bại");
+            }
+            break;
+        case "Khách hàng":
+            try {
+                createPersonAPI(customer);
+                alertSuccess("Thêm dữ liệu khách hàng thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Thêm dữ liệu khách hàng thất bại");
+            }
+            break;
+        default:
+            alertFail("Phải điền đầy đủ thông tin người dùng");
+            break;
+    }
+})
 
 
 // Lấy data của tất cả user từ server
@@ -31,10 +96,10 @@ async function getPerson(searchVal) {
 }
 
 
-// Lấy data của user học viên
+// Lấy data của user Học sinh
 async function getStudent() {
     try {
-        const response = await getPersonAPI("Học viên");
+        const response = await getPersonAPI("Học sinh");
         console.log(response);
         const student = response.data.map(student => {
             return new Student(
@@ -52,15 +117,15 @@ async function getStudent() {
         renderStudent(student);
     } catch (error) {
         console.log(error);
-        alertFail("Lấy dữ liệu học viên thất bại");
+        alertFail("Lấy dữ liệu Học sinh thất bại");
     }
 }
 
 
-// Lấy data của user giảng viên
+// Lấy data của user Nhân viên
 async function getEmployee() {
     try {
-        const response = await getPersonAPI("Giảng viên");
+        const response = await getPersonAPI("Nhân viên");
         console.log(response);
         const employee = response.data.map(employee => {
             return new Employee(
@@ -77,7 +142,7 @@ async function getEmployee() {
         renderEmployee(employee);
     } catch (error) {
         console.log(error);
-        alertFail("Lấy dữ liệu giảng viên thất bại");
+        alertFail("Lấy dữ liệu Nhân viên thất bại");
     }
 }
 
@@ -117,7 +182,7 @@ window.deletePerson = async function deletePerson(personID) {
             await deletePersonAPI(personID);
 
             await getPerson();
-            
+
             alertSuccess("Xóa dữ liệu người dùng thành công");
         }
     } catch (error) {
@@ -127,40 +192,40 @@ window.deletePerson = async function deletePerson(personID) {
 }
 
 
-// Xóa data của user học viên
+// Xóa data của user Học sinh
 window.deleteStudent = async function deleteStudent(studentID) {
     try {
         const { isConfirmed: result } = await warningDelete();
         console.log(result);
         if (result) {
-            await deletePersonAPI(studentID, "Học viên");
+            await deletePersonAPI(studentID, "Học sinh");
 
             await getStudent();
-            
-            alertSuccess("Xóa dữ liệu học viên thành công");
+
+            alertSuccess("Xóa dữ liệu học sinh thành công");
         }
     } catch (error) {
         console.log(error);
-        alertFail("Xóa dữ liệu học viên thất bại");
+        alertFail("Xóa dữ liệu học sinh thất bại");
     }
 }
 
 
-// Xóa data của user giảng viên
+// Xóa data của user Nhân viên
 window.deleteEmployee = async function deleteEmployee(employeeID) {
     try {
         const { isConfirmed: result } = await warningDelete();
         console.log(result);
         if (result) {
-            await deletePersonAPI(employeeID, "Giảng viên");
+            await deletePersonAPI(employeeID, "Nhân viên");
 
             await getEmployee();
-            
-            alertSuccess("Xóa dữ liệu giảng viên thành công");
+
+            alertSuccess("Xóa dữ liệu nhân viên thành công");
         }
     } catch (error) {
         console.log(error);
-        alertFail("Xóa dữ liệu giảng viên thất bại");
+        alertFail("Xóa dữ liệu nhân viên thất bại");
     }
 }
 
@@ -174,7 +239,7 @@ window.deleteCustomer = async function deleteCustomer(customerID) {
             await deletePersonAPI(customerID, "Khách hàng");
 
             await getCustomer();
-            
+
             alertSuccess("Xóa dữ liệu khách hàng thành công");
         }
     } catch (error) {
@@ -208,7 +273,7 @@ function renderPerson(person) {
     getEle("#userList").innerHTML = html;
 }
 
-// Hiển thị danh sách học viên
+// Hiển thị danh sách Học sinh
 function renderStudent(student) {
     let html = student.reduce((result, student) => {
         return (result +
@@ -235,7 +300,7 @@ function renderStudent(student) {
     getEle("#userList").innerHTML = html;
 }
 
-// Hiển thị danh sách giảng viên
+// Hiển thị danh sách Nhân viên
 function renderEmployee(employee) {
     let html = employee.reduce((result, employee) => {
         return (result +
@@ -313,17 +378,17 @@ getEle("#categoryList").addEventListener("change", (event) => {
 getEle("#userType").addEventListener("change", () => {
     let userType = getEle("#userType").value;
     switch (userType) {
-        case "student":
+        case "Học sinh":
             getEle(".student-info").classList.remove("d-none");
             getEle(".employee-info").classList.add("d-none");
             getEle(".company-info").classList.add("d-none");
             break;
-        case "employee":
+        case "Nhân viên":
             getEle(".student-info").classList.add("d-none");
             getEle(".employee-info").classList.remove("d-none");
             getEle(".company-info").classList.add("d-none");
             break;
-        case "customer":
+        case "Khách hàng":
             getEle(".student-info").classList.add("d-none");
             getEle(".employee-info").classList.add("d-none");
             getEle(".company-info").classList.remove("d-none");
@@ -341,6 +406,9 @@ getEle("#btnOpenModal").addEventListener("click", () => {
     getEle("#btnAdd").style.display = "inline-block";
 })
 
+getEle("#btnClose").addEventListener("click", () => {
+    resetForm("#personForm");
+})
 
 /* HELPERS */
 function getEle(selector) {
@@ -391,14 +459,17 @@ function displayCustomer() {
     getEle("#thComment").classList.remove("d-none");
 }
 
-
-// Lắng nghe sự kiện từ các button xóa bên trong tbody
-// document.getElementById("userList").addEventListener("click", (event) => {
-//     console.log(event.target);
-//     // Kiểm tra xem element vừa phát sinh ra sự kiện có thuộc tính data-id hay không, nếu có thì lấy ra giá trị của thuộc tính đó
-//     const id = event.target.getAttribute("data-id");
-//     console.log(id);
-//     // Sau khi có id gọi tới hàm deleteProduct
-//     if (!id) return;
-//     deletePerson(id);
-// });
+function resetForm(formID) {
+    getEle(formID).reset();
+    getEle("#notiFullName").innerHTML = '';
+    getEle("#notiEmail").innerHTML = '';
+    getEle("#notiAddres").innerHTML = '';
+    getEle("#notiMath").innerHTML = '';
+    getEle("#notiPhysics").innerHTML = '';
+    getEle("#notiChemistry").innerHTML = '';
+    getEle("#notiDays").innerHTML = '';
+    getEle("#notiBaseSalary").innerHTML = '';
+    getEle("#notiCompany").innerHTML = '';
+    getEle("#notiInvoice").innerHTML = '';
+    getEle("#notiComment").innerHTML = '';
+}

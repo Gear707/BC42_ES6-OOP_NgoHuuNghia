@@ -3,7 +3,7 @@ import axios from "../../node_modules/axios/dist/esm/axios.js";
 
 const API_URL = "https://63e86417cbdc565873852d8b.mockapi.io/api/users";
 
-// Lấy tất cả data từ server
+// Lấy data từ server (nếu không truyền tham số thì mặc định lấy tất cả, nếu có tham số thì đó là value của thuộc tính category)
 export function getPersonAPI(searchVal){
     return axios({
         method: "GET",
@@ -22,5 +22,14 @@ export function deletePersonAPI(personID, usertype){
         params: {
             category: usertype || undefined
         }
+    });
+}
+
+// Thêm data mới vào server
+export function createPersonAPI(person){
+    return axios({
+        method: "POST",
+        url: API_URL,
+        data: person
     });
 }
