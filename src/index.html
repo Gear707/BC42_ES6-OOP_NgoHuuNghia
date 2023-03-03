@@ -31,34 +31,32 @@
         <div class="container">
             <div class="card">
                 <!-- Header -->
-                <div class="card-header text-center d-flex justify-content-between">
-                    <h3 class="text-info text-left font-weight-bold">Danh sách quản lý</h3>
-                    <button class="btn btn-dark" id="btnOpenModal" data-toggle="modal" data-target="#personModal">
-                        Thêm mới
-                    </button>
+                <div class="card-header text-center ">
+                    <h3 class="text-info font-weight-bold">Danh sách quản lý</h3>
                 </div>
                 <!-- Body -->
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col-4">
+                    <div class="d-flex mb-2 justify-content-between">
+                        <!-- <div class="col-4">
                             <div class="input-group">
                                 <input id="txtSearch" type="text" class="form-control" placeholder="Tìm từ khóa" />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-search"></i></span>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="form-group">
+                            <select class="custom-select" id="categoryList">
+                                <option selected>Tất cả</option>
+                                <option value="student">Học sinh</option>
+                                <option value="employee">Nhân viên</option>
+                                <option value="customer">Khách hàng</option>
+                            </select>
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <div class="w-50">
-                                    <select class="custom-select" id="categoryList">
-                                        <option selected>Tất cả</option>
-                                        <option value="student">Học sinh</option>
-                                        <option value="employee">Nhân viên</option>
-                                        <option value="customer">Khách hàng</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <button class="btn btn-dark" id="btnOpenModal" data-toggle="modal" data-target="#personModal">
+                                Thêm mới
+                            </button>
                         </div>
                     </div>
                     <div class="table-responsive">

@@ -4,12 +4,12 @@ import axios from "../../node_modules/axios/dist/esm/axios.js";
 const API_URL = "https://63e86417cbdc565873852d8b.mockapi.io/api/users";
 
 // Lấy data từ server (nếu không truyền tham số thì mặc định lấy tất cả, nếu có tham số thì đó là value của thuộc tính category)
-export function getPersonAPI(searchVal){
+export function getPersonAPI(value){
     return axios({
         method: "GET",
         url: API_URL,
         params: {
-            category: searchVal || undefined
+            category: value || undefined
         }
     });
 }

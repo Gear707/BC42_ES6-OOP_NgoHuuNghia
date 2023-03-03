@@ -74,9 +74,9 @@ getEle("#btnAdd").addEventListener("click", () => {
 
 
 // Lấy data của tất cả user từ server
-async function getPerson(searchVal) {
+async function getPerson(value) {
     try {
-        const response = await getPersonAPI(searchVal);
+        const response = await getPersonAPI(value);
         console.log(response);
         const person = response.data.map(person => {
             return new Person(
