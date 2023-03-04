@@ -1,5 +1,5 @@
 import { Person, Student, Employee, Customer } from "./Person.js";
-import { getPersonAPI, deletePersonAPI, createPersonAPI } from "./personAPI.js";
+import { getPersonAPI, deletePersonAPI, createPersonAPI, getPersonAPIByID, updatePersonAPI } from "./personAPI.js";
 import { alertFail, alertSuccess, warningDelete } from "./sweetAlert.js";
 
 
@@ -11,7 +11,7 @@ getPerson();
 // Thêm mới user vào server
 getEle("#btnAdd").addEventListener("click", () => {
     const person = {
-        category: getEle("#userType").value,
+        category: getEle("#categoryForm").value,
         fullName: getEle("#fullName").value,
         email: getEle("#email").value,
         address: getEle("#address").value
@@ -37,8 +37,8 @@ getEle("#btnAdd").addEventListener("click", () => {
         comment: getEle("#comment").value
     }
 
-    let userType = getEle("#userType").value;
-    switch (userType) {
+    let categoryForm = getEle("#categoryForm").value;
+    switch (categoryForm) {
         case "Học sinh":
             try {
                 createPersonAPI(student);
@@ -70,7 +70,144 @@ getEle("#btnAdd").addEventListener("click", () => {
             alertFail("Phải điền đầy đủ thông tin người dùng");
             break;
     }
+
+    resetForm("#personForm");
 })
+
+
+// Hiển thị chi tiết 1 người dùng bất kì lên form
+window.selectPerson = async function selectPerson(personID) {
+    getEle("#btnAdd").style.display = "none";
+    getEle("#btnUpdate").style.display = "inline-block";
+
+    try {
+        const { data: person } = await getPersonAPIByID(personID);
+        console.log(person);
+
+        let type = person.category;
+        switch (type) {
+            case "Học sinh": // loại người dùng là học sinh
+                getEle("#categoryForm").value = type;
+                getEle("#fullName").value = person.fullName;
+                getEle("#email").value = person.email;
+                getEle("#address").value = person.address;
+                getEle("#math").value = person.math;
+                getEle("#physics").value = person.physics;
+                getEle("#chemistry").value = person.chemistry;
+                displayStudentForm();
+                break;
+            case "Nhân viên": // loại người dùng là nhân viên
+                getEle("#categoryForm").value = type;
+                getEle("#fullName").value = person.fullName;
+                getEle("#email").value = person.email;
+                getEle("#address").value = person.address;
+                getEle("#days").value = person.days;
+                getEle("#baseSalary").value = person.baseSalary;
+                displayEmployeeForm();
+                break;
+            case "Khách hàng": // loại người dùng là khách hàng
+                getEle("#categoryForm").value = type;
+                getEle("#fullName").value = person.fullName;
+                getEle("#email").value = person.email;
+                getEle("#address").value = person.address;
+                getEle("#company").value = person.company;
+                getEle("#invoice").value = person.invoice;
+                getEle("#comment").value = person.comment;
+                displayCustomerForm();
+                break;
+        }
+
+        getEle("#btnUpdate").setAttribute("onclick", `window.updatePerson(${person.id})`);
+    } catch (error) {
+        console.log(error);
+        alertFail("Lấy dữ liệu bằng ID thất bại")
+    }
+}
+
+
+// Lắng nghe sự kiện của các button con (Sửa) trong table cha (academyTable)
+getEle("#academyTable").addEventListener("click", event => {
+    console.log(event.target);
+    // Kiểm tra element vừa phát sinh ra sự kiện có thuộc tính data-id hay không. Nếu có thì lấy ra giá trị của thuộc tính đó
+    const id = event.target.getAttribute("data-id");
+    console.log(id);
+    // Sau khi có id gọi tới hàm selectPerson
+    if (!id) return;
+    selectPerson(id);
+})
+
+
+// Cập nhật thông tin user
+window.updatePerson = function updatePerson(personID) {
+    const person = {
+        category: getEle("#categoryForm").value,
+        fullName: getEle("#fullName").value,
+        email: getEle("#email").value,
+        address: getEle("#address").value
+    };
+
+    const student = {
+        ...person,
+        math: getEle("#math").value,
+        physics: getEle("#physics").value,
+        chemistry: getEle("#chemistry").value
+    }
+
+    const employee = {
+        ...person,
+        days: getEle("#days").value,
+        baseSalary: getEle("#baseSalary").value
+    }
+
+    const customer = {
+        ...person,
+        company: getEle("#company").value,
+        invoice: getEle("#invoice").value,
+        comment: getEle("#comment").value
+    }
+
+    let categoryForm = getEle("#categoryForm").value;
+    switch (categoryForm) {
+        case "Học sinh":
+            try {
+                updatePersonAPI(personID, student);
+                alertSuccess("Cập nhật dữ liệu học sinh thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Cập nhật dữ liệu học sinh thất bại");
+            }
+            break;
+        case "Nhân viên":
+            try {
+                updatePersonAPI(personID, employee);
+                alertSuccess("Cập nhật dữ liệu nhân viên thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Cập nhật dữ liệu nhân viên thất bại");
+            }
+            break;
+        case "Khách hàng":
+            try {
+                updatePersonAPI(personID, customer);
+                alertSuccess("Cập nhật dữ liệu khách hàng thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Cập nhật dữ liệu khách hàng thất bại");
+            }
+            break;
+        default:
+            try {
+                updatePersonAPI(personID, person);
+                alertSuccess("Cập nhật dữ liệu người dùng thành công");
+            } catch (error) {
+                console.log(error);
+                alertFail("Phải điền đầy đủ thông tin người dùng");
+            }
+            break;
+    }
+
+    resetForm("#personForm");
+}
 
 
 // Lấy data của tất cả user từ server
@@ -249,7 +386,6 @@ window.deleteCustomer = async function deleteCustomer(customerID) {
 }
 
 
-
 // Hiển thị danh sách chung
 function renderPerson(person) {
     let html = person.reduce((result, person) => {
@@ -262,7 +398,7 @@ function renderPerson(person) {
                 <td class="text-center">${person.address}</td>
                 <td class="text-center">${person.email}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${person.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${person.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deletePerson(${person.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
@@ -289,7 +425,7 @@ function renderStudent(student) {
                 <td class="text-center">${student.chemistry}</td>
                 <td class="text-center">${student.averageGrade()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${student.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${student.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deleteStudent(${student.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
@@ -313,7 +449,7 @@ function renderEmployee(employee) {
                 <td class="text-center">${employee.email}</td>
                 <td class="text-center">${employee.totalSalary()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${employee.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${employee.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deleteEmployee(${employee.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
@@ -339,7 +475,7 @@ function renderCustomer(customer) {
                 <td class="text-center">${customer.invoice}</td>
                 <td class="text-center">${customer.comment}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" onclick="window.selectPerson(${customer.id})">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${customer.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deleteCustomer(${customer.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
                 </td>
             </tr>
@@ -352,51 +488,42 @@ function renderCustomer(customer) {
 
 
 /* DOM */
-getEle("#categoryList").addEventListener("change", (event) => {
-    console.log(event);
-    let categoryList = getEle("#categoryList").value;
-    switch (categoryList) {
+getEle("#categoryTable").addEventListener("change", (event) => {
+    let categoryTable = getEle("#categoryTable").value;
+    switch (categoryTable) {
         case "student":
-            displayStudent();
+            displayStudentTable();
             getStudent();
             break;
         case "employee":
-            displayEmployee();
+            displayEmployeeTable();
             getEmployee();
             break;
         case "customer":
-            displayCustomer();
+            displayCustomerTable();
             getCustomer();
             break;
         default:
-            displayPerson();
+            displayPersonTable();
             getPerson();
             break;
     }
 });
 
-getEle("#userType").addEventListener("change", () => {
-    let userType = getEle("#userType").value;
-    switch (userType) {
+getEle("#categoryForm").addEventListener("change", () => {
+    let categoryForm = getEle("#categoryForm").value;
+    switch (categoryForm) {
         case "Học sinh":
-            getEle(".student-info").classList.remove("d-none");
-            getEle(".employee-info").classList.add("d-none");
-            getEle(".company-info").classList.add("d-none");
+            displayStudentForm();
             break;
         case "Nhân viên":
-            getEle(".student-info").classList.add("d-none");
-            getEle(".employee-info").classList.remove("d-none");
-            getEle(".company-info").classList.add("d-none");
+            displayEmployeeForm();
             break;
         case "Khách hàng":
-            getEle(".student-info").classList.add("d-none");
-            getEle(".employee-info").classList.add("d-none");
-            getEle(".company-info").classList.remove("d-none");
+            displayCustomerForm();
             break;
         default:
-            getEle(".student-info").classList.add("d-none");
-            getEle(".employee-info").classList.add("d-none");
-            getEle(".company-info").classList.add("d-none");
+            displayPersonForm();
             break;
     }
 });
@@ -415,7 +542,7 @@ function getEle(selector) {
     return document.querySelector(selector);
 }
 
-function displayPerson() {
+function displayPersonTable() {
     getEle("#thMath").classList.add("d-none");
     getEle("#thPhysics").classList.add("d-none");
     getEle("#thChemistry").classList.add("d-none");
@@ -426,7 +553,7 @@ function displayPerson() {
     getEle("#thComment").classList.add("d-none");
 }
 
-function displayStudent() {
+function displayStudentTable() {
     getEle("#thMath").classList.remove("d-none");
     getEle("#thPhysics").classList.remove("d-none");
     getEle("#thChemistry").classList.remove("d-none");
@@ -437,7 +564,7 @@ function displayStudent() {
     getEle("#thComment").classList.add("d-none");
 }
 
-function displayEmployee() {
+function displayEmployeeTable() {
     getEle("#thMath").classList.add("d-none");
     getEle("#thPhysics").classList.add("d-none");
     getEle("#thChemistry").classList.add("d-none");
@@ -448,7 +575,7 @@ function displayEmployee() {
     getEle("#thComment").classList.add("d-none");
 }
 
-function displayCustomer() {
+function displayCustomerTable() {
     getEle("#thMath").classList.add("d-none");
     getEle("#thPhysics").classList.add("d-none");
     getEle("#thChemistry").classList.add("d-none");
@@ -472,4 +599,28 @@ function resetForm(formID) {
     getEle("#notiCompany").innerHTML = '';
     getEle("#notiInvoice").innerHTML = '';
     getEle("#notiComment").innerHTML = '';
+}
+
+function displayPersonForm() {
+    getEle(".student-info").classList.add("d-none");
+    getEle(".employee-info").classList.add("d-none");
+    getEle(".company-info").classList.add("d-none");
+}
+
+function displayStudentForm() {
+    getEle(".student-info").classList.remove("d-none");
+    getEle(".employee-info").classList.add("d-none");
+    getEle(".company-info").classList.add("d-none");
+}
+
+function displayEmployeeForm() {
+    getEle(".student-info").classList.add("d-none");
+    getEle(".employee-info").classList.remove("d-none");
+    getEle(".company-info").classList.add("d-none");
+}
+
+function displayCustomerForm() {
+    getEle(".student-info").classList.add("d-none");
+    getEle(".employee-info").classList.add("d-none");
+    getEle(".company-info").classList.remove("d-none");
 }

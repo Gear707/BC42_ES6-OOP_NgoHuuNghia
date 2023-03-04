@@ -14,13 +14,21 @@ export function getPersonAPI(value){
     });
 }
 
+// Lấy data theo ID
+export function getPersonAPIByID(personID){
+    return axios({
+        method: "GET",
+        url: `${API_URL}/${personID}`
+    });
+}
+
 // Xóa data khỏi server
-export function deletePersonAPI(personID, usertype){
+export function deletePersonAPI(personID, userType){
     return axios({
         method: "DELETE",
         url: `${API_URL}/${personID}`,
         params: {
-            category: usertype || undefined
+            category: userType || undefined
         }
     });
 }
@@ -30,6 +38,15 @@ export function createPersonAPI(person){
     return axios({
         method: "POST",
         url: API_URL,
+        data: person
+    });
+}
+
+// Cập nhật data vào server
+export function updatePersonAPI(personID, person){
+    return axios({
+        method: "PUT",
+        url: `${API_URL}/${personID}`,
         data: person
     });
 }
