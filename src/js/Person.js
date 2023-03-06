@@ -1,6 +1,6 @@
 /* Tạo lớp cha Person và 3 lớp con gồm: Student, Employ, Customer */
 
-export class Person {
+class Person {
     constructor(id, category, fullName, address, email) {
         this.id = id
         this.category = category;
@@ -10,7 +10,7 @@ export class Person {
     }
 }
 
-export class Student extends Person {
+class Student extends Person {
     constructor(id, category, fullName, address, email, math, physics, chemistry) {
         super(id, category, fullName, address, email);
         this.math = Number(math);
@@ -24,7 +24,7 @@ export class Student extends Person {
     }
 }
 
-export class Employee extends Person {
+class Employee extends Person {
     constructor(id, category, fullName, address, email, days, baseSalary) {
         super(id, category, fullName, address, email);
         this.days = Number(days);
@@ -37,7 +37,7 @@ export class Employee extends Person {
     }
 }
 
-export class Customer extends Person {
+class Customer extends Person {
     constructor(id, category, fullName, address, email, company, invoice, comment) {
         super(id, category, fullName, address, email);
         this.company = company;
@@ -45,3 +45,5 @@ export class Customer extends Person {
         this.comment = comment;
     }
 }
+
+export { Person, Student, Employee, Customer };

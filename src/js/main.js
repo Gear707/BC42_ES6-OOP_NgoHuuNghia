@@ -1,8 +1,8 @@
+import getEle from "./helpers.js";
 import { Person, Student, Employee, Customer } from "./Person.js";
 import { getPersonAPI, deletePersonAPI, createPersonAPI, getPersonAPIByID, updatePersonAPI } from "./personAPI.js";
 import { alertFail, alertSuccess, warningDelete } from "./sweetAlert.js";
-
-
+import { validateCustomer, validateEmployee, validatePerson, validateStudent } from "./validation.js";
 
 // Hiển thị danh sách tất cả user
 getPerson();
@@ -38,9 +38,17 @@ getEle("#btnAdd").addEventListener("click", () => {
     }
 
     let categoryForm = getEle("#categoryForm").value;
+    let isValidPerson = validatePerson();
+    let isValidStudent = validateStudent();
+    let isValidEmployee = validateEmployee();
+    let isValidCustomer = validateCustomer();
+
+    if (!isValidPerson) return;
+
     switch (categoryForm) {
         case "Học sinh":
             try {
+                if (!isValidStudent) return; 
                 createPersonAPI(student);
                 alertSuccess("Thêm dữ liệu học sinh thành công");
             } catch (error) {
@@ -50,6 +58,7 @@ getEle("#btnAdd").addEventListener("click", () => {
             break;
         case "Nhân viên":
             try {
+                if (!isValidEmployee) return;
                 createPersonAPI(employee);
                 alertSuccess("Thêm dữ liệu nhân viên thành công");
             } catch (error) {
@@ -59,6 +68,7 @@ getEle("#btnAdd").addEventListener("click", () => {
             break;
         case "Khách hàng":
             try {
+                if (!isValidCustomer) return;
                 createPersonAPI(customer);
                 alertSuccess("Thêm dữ liệu khách hàng thành công");
             } catch (error) {
@@ -535,12 +545,9 @@ getEle("#btnOpenModal").addEventListener("click", () => {
 
 getEle("#btnClose").addEventListener("click", () => {
     resetForm("#personForm");
+    displayPersonForm();
 })
 
-/* HELPERS */
-function getEle(selector) {
-    return document.querySelector(selector);
-}
 
 function displayPersonTable() {
     getEle("#thMath").classList.add("d-none");

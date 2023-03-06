@@ -4,7 +4,7 @@ import axios from "../../node_modules/axios/dist/esm/axios.js";
 const API_URL = "https://63e86417cbdc565873852d8b.mockapi.io/api/users";
 
 // Lấy data từ server (nếu không truyền tham số thì mặc định lấy tất cả, nếu có tham số thì đó là value của thuộc tính category)
-export function getPersonAPI(value){
+function getPersonAPI(value) {
     return axios({
         method: "GET",
         url: API_URL,
@@ -15,7 +15,7 @@ export function getPersonAPI(value){
 }
 
 // Lấy data theo ID
-export function getPersonAPIByID(personID){
+function getPersonAPIByID(personID) {
     return axios({
         method: "GET",
         url: `${API_URL}/${personID}`
@@ -23,7 +23,7 @@ export function getPersonAPIByID(personID){
 }
 
 // Xóa data khỏi server
-export function deletePersonAPI(personID, userType){
+function deletePersonAPI(personID, userType) {
     return axios({
         method: "DELETE",
         url: `${API_URL}/${personID}`,
@@ -34,7 +34,7 @@ export function deletePersonAPI(personID, userType){
 }
 
 // Thêm data mới vào server
-export function createPersonAPI(person){
+function createPersonAPI(person) {
     return axios({
         method: "POST",
         url: API_URL,
@@ -43,10 +43,12 @@ export function createPersonAPI(person){
 }
 
 // Cập nhật data vào server
-export function updatePersonAPI(personID, person){
+function updatePersonAPI(personID, person) {
     return axios({
         method: "PUT",
         url: `${API_URL}/${personID}`,
         data: person
     });
 }
+
+export { getPersonAPI, getPersonAPIByID, deletePersonAPI, createPersonAPI, updatePersonAPI };
