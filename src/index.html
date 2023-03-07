@@ -26,15 +26,15 @@
 </head>
 
 <body>
-    <!-- Page Content Holder -->
+    <!-- PAGE CONTENT -->
     <div class="content">
         <div class="container">
             <div class="card">
-                <!-- Header -->
+                <!-- HEADER -->
                 <div class="card-header text-center ">
                     <h3 class="text-info font-weight-bold">Danh sách quản lý</h3>
                 </div>
-                <!-- Body -->
+                <!-- BODY -->
                 <div class="card-body">
                     <div class="d-flex mb-2 justify-content-between">
                         <!-- <div class="col-4">
@@ -47,7 +47,7 @@
                         </div> -->
                         <div class="form-group">
                             <select class="custom-select" id="categoryTable">
-                                <option selected>Tất cả</option>
+                                <option value="all" selected>Tất cả</option>
                                 <option value="student">Học sinh</option>
                                 <option value="employee">Nhân viên</option>
                                 <option value="customer">Khách hàng</option>
@@ -83,7 +83,7 @@
                         </table>
                     </div>
                 </div>
-                <!-- Footer -->
+                <!-- FOOTER -->
                 <!-- <div class="card-footer myCardFooter">
                     <nav>
                         <ul class="pagination justify-content-center" id="ulPhanTrang">
@@ -95,15 +95,15 @@
     </div>
 
 
-    <!-- The Modal -->
+    <!-- THE MODAL -->
     <div class="modal fade" id="personModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Modal header -->
+                <!-- MODAL HEADER -->
                 <header class="head-form mb-0">
                     <h3 id="header-title">Form quản lý</h3>
                 </header>
-                <!-- Modal body -->
+                <!-- MODAL BODY -->
                 <div class="modal-body">
                     <form role="form" id="personForm">
                         <div class="form-group form__item">
@@ -232,7 +232,7 @@
                     </form>
                 </div>
 
-                <!-- Modal footer -->
+                <!-- MODAL FOOTER -->
                 <div class="modal-footer d-flex justify-content-center">
                     <button id="btnAdd" class="btn btn-info">Thêm</button>
                     <button id="btnUpdate" class="btn btn-warning">Cập nhật</button>

@@ -498,12 +498,12 @@ function renderCustomer(customer) {
 
 
 /* DOM */
-getEle("#categoryTable").addEventListener("change", (event) => {
+getEle("#categoryTable").addEventListener("change", () => {
     let categoryTable = getEle("#categoryTable").value;
     switch (categoryTable) {
         case "student":
-            displayStudentTable();
             getStudent();
+            displayStudentTable();
             break;
         case "employee":
             displayEmployeeTable();
