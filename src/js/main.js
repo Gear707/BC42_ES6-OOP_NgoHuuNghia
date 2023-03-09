@@ -37,7 +37,7 @@ getEle("#btnAdd").addEventListener("click", () => {
         comment: getEle("#comment").value
     }
 
-    let categoryForm = getEle("#categoryForm").value;
+    let categoryForm = getEle("#categoryForm").selectedIndex;
     let isValidPerson = validatePerson();
     let isValidStudent = validateStudent();
     let isValidEmployee = validateEmployee();
@@ -46,7 +46,7 @@ getEle("#btnAdd").addEventListener("click", () => {
     if (!isValidPerson) return;
 
     switch (categoryForm) {
-        case "Học sinh":
+        case 1:
             try {
                 if (!isValidStudent) return; 
                 createPersonAPI(student);
@@ -56,7 +56,7 @@ getEle("#btnAdd").addEventListener("click", () => {
                 alertFail("Thêm dữ liệu học sinh thất bại");
             }
             break;
-        case "Nhân viên":
+        case 2:
             try {
                 if (!isValidEmployee) return;
                 createPersonAPI(employee);
@@ -66,7 +66,7 @@ getEle("#btnAdd").addEventListener("click", () => {
                 alertFail("Thêm dữ liệu nhân viên thất bại");
             }
             break;
-        case "Khách hàng":
+        case 3:
             try {
                 if (!isValidCustomer) return;
                 createPersonAPI(customer);
@@ -176,9 +176,9 @@ window.updatePerson = function updatePerson(personID) {
         comment: getEle("#comment").value
     }
 
-    let categoryForm = getEle("#categoryForm").value;
+    let categoryForm = getEle("#categoryForm").selectedIndex;
     switch (categoryForm) {
-        case "Học sinh":
+        case 1:
             try {
                 updatePersonAPI(personID, student);
                 alertSuccess("Cập nhật dữ liệu học sinh thành công");
@@ -187,7 +187,7 @@ window.updatePerson = function updatePerson(personID) {
                 alertFail("Cập nhật dữ liệu học sinh thất bại");
             }
             break;
-        case "Nhân viên":
+        case 2:
             try {
                 updatePersonAPI(personID, employee);
                 alertSuccess("Cập nhật dữ liệu nhân viên thành công");
@@ -196,7 +196,7 @@ window.updatePerson = function updatePerson(personID) {
                 alertFail("Cập nhật dữ liệu nhân viên thất bại");
             }
             break;
-        case "Khách hàng":
+        case 3:
             try {
                 updatePersonAPI(personID, customer);
                 alertSuccess("Cập nhật dữ liệu khách hàng thành công");
@@ -499,17 +499,17 @@ function renderCustomer(customer) {
 
 /* DOM */
 getEle("#categoryTable").addEventListener("change", () => {
-    let categoryTable = getEle("#categoryTable").value;
+    let categoryTable = getEle("#categoryTable").selectedIndex;
     switch (categoryTable) {
-        case "student":
+        case 1:
             getStudent();
             displayStudentTable();
             break;
-        case "employee":
+        case 2:
             displayEmployeeTable();
             getEmployee();
             break;
-        case "customer":
+        case 3:
             displayCustomerTable();
             getCustomer();
             break;
@@ -521,15 +521,15 @@ getEle("#categoryTable").addEventListener("change", () => {
 });
 
 getEle("#categoryForm").addEventListener("change", () => {
-    let categoryForm = getEle("#categoryForm").value;
+    let categoryForm = getEle("#categoryForm").selectedIndex;
     switch (categoryForm) {
-        case "Học sinh":
+        case 1:
             displayStudentForm();
             break;
-        case "Nhân viên":
+        case 2:
             displayEmployeeForm();
             break;
-        case "Khách hàng":
+        case 3:
             displayCustomerForm();
             break;
         default:

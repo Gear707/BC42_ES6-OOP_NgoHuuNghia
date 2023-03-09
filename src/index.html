@@ -47,10 +47,10 @@
                         </div> -->
                         <div class="form-group">
                             <select class="custom-select" id="categoryTable">
-                                <option value="all" selected>Tất cả</option>
-                                <option value="student">Học sinh</option>
-                                <option value="employee">Nhân viên</option>
-                                <option value="customer">Khách hàng</option>
+                                <option selected>Tất cả</option>
+                                <option>Học sinh</option>
+                                <option>Nhân viên</option>
+                                <option>Khách hàng</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -184,7 +184,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
                                     </div>
-                                    <input type="number" id="days" class="form-control" placeholder="Số ngày làm">
+                                    <input type="number" id="days" class="form-control" min="0" placeholder="Số ngày làm">
                                 </div>
                                 <span class="spNoti" id="notiDays"></span>
                             </div>

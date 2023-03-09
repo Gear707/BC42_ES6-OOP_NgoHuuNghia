@@ -9,8 +9,8 @@ function validatePerson() {
     let isValid = true;
 
     // kiểm tra loại người dùng
-    let category = getEle("#categoryForm").value;
-    if (category === "Chọn loại người dùng") {
+    let category = getEle("#categoryForm").selectedIndex;
+    if (category === 0) {
         isValid = false;
         getEle("#notiCategoryForm").innerHTML = "Vui lòng chọn loại người dùng";
     }
