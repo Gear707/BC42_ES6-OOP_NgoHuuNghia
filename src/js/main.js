@@ -408,8 +408,8 @@ function renderPerson(person) {
                 <td class="text-center">${person.address}</td>
                 <td class="text-center">${person.email}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${person.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="window.deletePerson(${person.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${person.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deletePerson(${person.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
             `
@@ -435,8 +435,8 @@ function renderStudent(student) {
                 <td class="text-center">${student.chemistry}</td>
                 <td class="text-center">${student.averageGrade()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${student.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="window.deleteStudent(${student.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${student.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deleteStudent(${student.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
             `
@@ -459,8 +459,8 @@ function renderEmployee(employee) {
                 <td class="text-center">${employee.email}</td>
                 <td class="text-center">${employee.totalSalary()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${employee.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="window.deleteEmployee(${employee.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${employee.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deleteEmployee(${employee.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
             `
@@ -485,8 +485,8 @@ function renderCustomer(customer) {
                 <td class="text-center">${customer.invoice}</td>
                 <td class="text-center">${customer.comment}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${customer.id}">Sửa<i class="fa-regular fa-pen-to-square ml-2"></i></button>
-                    <button class="btn btn-danger my-1" onclick="window.deleteCustomer(${customer.id})">Xóa<i class="fa-regular fa-trash-can ml-2"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${customer.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-danger my-1" onclick="window.deleteCustomer(${customer.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
             `

@@ -29,11 +29,11 @@ function alertFail(alert) {
 // Thông báo xác nhận xóa data
 function warningDelete() {
     return Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Bạn có chắc là muốn xóa dữ liệu này không?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: 'Hủy thao tác',
+        confirmButtonText: 'Có, tôi muốn xóa'
     });
 }
 
