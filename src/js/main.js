@@ -408,7 +408,7 @@ function renderPerson(person) {
                 <td class="text-center">${person.address}</td>
                 <td class="text-center">${person.email}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${person.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${person.id}" title="Sửa"><i class="fa-regular fa-pen-to-square" data-id="${person.id}"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deletePerson(${person.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
@@ -435,7 +435,7 @@ function renderStudent(student) {
                 <td class="text-center">${student.chemistry}</td>
                 <td class="text-center">${student.averageGrade()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${student.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${student.id}" title="Sửa"><i class="fa-regular fa-pen-to-square" data-id="${student.id}"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deleteStudent(${student.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
@@ -459,7 +459,7 @@ function renderEmployee(employee) {
                 <td class="text-center">${employee.email}</td>
                 <td class="text-center">${employee.totalSalary()}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${employee.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${employee.id}" title="Sửa"><i class="fa-regular fa-pen-to-square" data-id="${employee.id}"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deleteEmployee(${employee.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
@@ -485,7 +485,7 @@ function renderCustomer(customer) {
                 <td class="text-center">${customer.invoice}</td>
                 <td class="text-center">${customer.comment}</td>
                 <td class="text-center">
-                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${customer.id}" title="Sửa"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button class="btn btn-primary my-1" data-toggle="modal" data-target="#personModal" data-id="${customer.id}" title="Sửa"><i class="fa-regular fa-pen-to-square" data-id="${customer.id}"></i></button>
                     <button class="btn btn-danger my-1" onclick="window.deleteCustomer(${customer.id})" title="Xóa"><i class="fa-regular fa-trash-can"></i></button>
                 </td>
             </tr>
@@ -595,17 +595,12 @@ function displayCustomerTable() {
 
 function resetForm(formID) {
     getEle(formID).reset();
-    getEle("#notiFullName").innerHTML = '';
-    getEle("#notiEmail").innerHTML = '';
-    getEle("#notiAddres").innerHTML = '';
-    getEle("#notiMath").innerHTML = '';
-    getEle("#notiPhysics").innerHTML = '';
-    getEle("#notiChemistry").innerHTML = '';
-    getEle("#notiDays").innerHTML = '';
-    getEle("#notiBaseSalary").innerHTML = '';
-    getEle("#notiCompany").innerHTML = '';
-    getEle("#notiInvoice").innerHTML = '';
-    getEle("#notiComment").innerHTML = '';
+
+    const spanArr = Array.from(document.querySelectorAll(".spNoti"));
+    console.log(spanArr);
+    for (let spanEle of spanArr) {
+        spanEle.innerHTML = "";
+    }
 }
 
 function displayPersonForm() {
