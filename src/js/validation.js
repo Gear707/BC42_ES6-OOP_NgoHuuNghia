@@ -3,7 +3,8 @@ import getEle from "./helpers.js";
 
 const VALID_STRING = "Thông tin không hợp lệ";
 const NUMBER_ONLY_STRING = "Chỉ được phép nhập số ở đây";
-const NUMBER_FORMAT = /^[0-9]*$/;
+const NUMBER_FORMAT = /^[0-9]*$/;  // numbers only
+const CHARACTER_FORMAT = /^[a-zA-Z ]*$/;  // alphabet & spaces only
 
 function validatePerson() {
     let isValid = true;
@@ -21,6 +22,10 @@ function validatePerson() {
     // kiểm tra họ tên
     let fullName = getEle("#fullName").value;
     if (!fullName) {
+        isValid = false;
+        getEle("#notiFullName").innerHTML = VALID_STRING;
+    }
+    else if (!fullName.match(CHARACTER_FORMAT)) {
         isValid = false;
         getEle("#notiFullName").innerHTML = VALID_STRING;
     }
