@@ -177,9 +177,17 @@ window.updatePerson = function updatePerson(personID) {
     }
 
     let categoryForm = getEle("#categoryForm").selectedIndex;
+    let isValidPerson = validatePerson();
+    let isValidStudent = validateStudent();
+    let isValidEmployee = validateEmployee();
+    let isValidCustomer = validateCustomer();
+
+    if (!isValidPerson) return;
+
     switch (categoryForm) {
         case 1:
             try {
+                if (!isValidStudent) return;
                 updatePersonAPI(personID, student);
                 alertSuccess("Cập nhật dữ liệu học sinh thành công");
             } catch (error) {
@@ -189,6 +197,7 @@ window.updatePerson = function updatePerson(personID) {
             break;
         case 2:
             try {
+                if (!isValidEmployee) return;
                 updatePersonAPI(personID, employee);
                 alertSuccess("Cập nhật dữ liệu nhân viên thành công");
             } catch (error) {
@@ -198,6 +207,7 @@ window.updatePerson = function updatePerson(personID) {
             break;
         case 3:
             try {
+                if (!isValidCustomer) return;
                 updatePersonAPI(personID, customer);
                 alertSuccess("Cập nhật dữ liệu khách hàng thành công");
             } catch (error) {
